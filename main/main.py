@@ -30,11 +30,11 @@ path = '../data/'
 ext = 'lightcurves/'
 # ext = 'photometry'
 
-# sample dataset
-sample = 'SN2000fa.txt'
-
 '''load all datasets into single numpy array'''
-temp_list = []
+# this will produce a nested python list of all SNe .txt files.
+# each element of the list is a numpy array
+
+dataset = []
 
 for filename in os.listdir(path+ext):
     if filename.endswith('.txt'):
@@ -56,9 +56,12 @@ for filename in os.listdir(path+ext):
                     footer_length = len(content) - j
                     break
 
-            data = np.genfromdata = np.genfromtxt(path+ext+filename, dtype=None, skip_header=header_length, \
+            data = np.genfromdata = np.genfromtxt(path+ext+filename, dtype=None, \
+                     skip_header=header_length, \
                      skip_footer = footer_length, \
                      names= ('VARLIST', 'MJD', 'FLT','FIELD', 'FLUXCAL', 'FLUXCALERR', \
                              'MAG', 'MAGERR')) # photometry data
 
-            temp_list.append(data)
+            dataset.append(data)
+
+
