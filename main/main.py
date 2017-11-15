@@ -22,46 +22,29 @@ import scipy.optimize as op
 import george
 from george import kernels
 
-''' load and tidy data '''
+# super GP modules
+import superGPmods as SGP
 
+''' load and tidy data '''
 # path to dataset
-path = '../data/'
+prefix = '../data/'
 # lcs or photo?
 ext = 'lightcurves/'
 # ext = 'photometry'
+
+path = prefix + ext
 
 '''load all datasets into single numpy array'''
 # this will produce a nested python list of all SNe .txt files.
 # each element of the list is a numpy array
 
-dataset = []
+dataset = SGP.loadData(path)
 
-for filename in os.listdir(path+ext):
-    if filename.endswith('.txt'):
-        with open(path+ext+filename, 'r') as f:
-            content = f.readlines()
+print(dataset[0][0])
 
-            # strip \n characters
-            content = [x.strip() for x in content]
-
-            # determine length of header
-            for i in range(0,len(content)):
-                if content[i][0:5] == 'OBS: ':
-                    header_length = i
-                    break
-            
-            # determine length of footer
-            for j in range(0,len(content)):
-                if content[j][0:4] == 'END:':
-                    footer_length = len(content) - j
-                    break
-
-            data = np.genfromdata = np.genfromtxt(path+ext+filename, dtype=None, \
-                     skip_header=header_length, \
-                     skip_footer = footer_length, \
-                     names= ('VARLIST', 'MJD', 'FLT','FIELD', 'FLUXCAL', 'FLUXCALERR', \
-                             'MAG', 'MAGERR')) # photometry data
-
-            dataset.append(data)
+# now len(dataset) = N, for N SNe lightcurve datasets
+# each element has 8 columns: 
+# 'VARLIST', 'MJD', 'FLT', 'FIELD', 'FLUXCAL', 'FLUXCALERR', 'MAG', 'MAGERR'
+# e.g. dataset[1]['MJD'] will display the modified julian date values for the 2nd SN dataset
 
 
