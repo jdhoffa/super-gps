@@ -33,26 +33,6 @@ ext = 'lightcurves/'
 # sample dataset
 sample = 'SN2000fa.txt'
 
-'''load single dataset'''
-# open up a sample dataset (open all later)
-with open(path+ext+sample, 'r') as f:
-    content = f.readlines()
-
-# strip the \n characters
-content = [x.strip() for x in content]
-
-# determine length of header
-for i in range(0,len(content)):
-    if content[i][0:5] == 'OBS: ':
-        header_length = i
-        break
-
-# determine length of footer
-for j in range(0,len(content)):
-    if content[j][0:4] == 'END:':
-        footer_length = len(content) - j
-        break 
-
 '''load all datasets into single numpy array'''
 temp_list = []
 
