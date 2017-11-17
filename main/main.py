@@ -34,17 +34,19 @@ ext = 'lightcurves/'
 
 path = prefix + ext
 
-'''load all datasets into single numpy array'''
-# this will produce a nested python list of all SNe .txt files.
-# each element of the list is a numpy array
+''' SGP.loadData() will produce a list of N elements, with each element corresponding to one SN dataset. 
+Each dataset consists of 8 columns: 
+'Varlist, 'MJD', 'FLT', 'FIELD', 'FLUXCAL', 'FLUXCALERR', 'MAG', 'MAGERR' 
+And a varying number of rows, corresponding to the length of the time series '''
 
 dataset = SGP.loadData(path)
 
-print(dataset[0][0])
+# plot random dataset
+import random
+random_dataset = random.choice(dataset)
+random_dataset['MJD']
+x = random_dataset['MJD']
+y = random_dataset['MAG']
+yerr = random_dataset['MAGERR']
 
-# now len(dataset) = N, for N SNe lightcurve datasets
-# each element has 8 columns: 
-# 'VARLIST', 'MJD', 'FLT', 'FIELD', 'FLUXCAL', 'FLUXCALERR', 'MAG', 'MAGERR'
-# e.g. dataset[1]['MJD'] will display the modified julian date values for the 2nd SN dataset
-
-
+# note: each dataset has values for different filters, not organized. have to split data by filter. first have to determine which filters are present in dataset
